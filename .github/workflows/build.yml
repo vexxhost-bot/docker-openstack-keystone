@@ -16,21 +16,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        exclude:
-        - from: focal
-          release: zed
-        - from: jammy
-          release: wallaby
-        - from: jammy
-          release: xena
         from:
-        - focal
         - jammy
         release:
         - wallaby
         - xena
         - yoga
         - zed
+        - 2023.1
     steps:
     - name: Install QEMU static binaries
       uses: docker/setup-qemu-action@v2
