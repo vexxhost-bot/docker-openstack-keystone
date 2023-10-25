@@ -5,10 +5,10 @@ ARG RUNTIME_IMAGE=quay.io/vexxhost/openstack-runtime-focal
 
 FROM quay.io/vexxhost/bindep-loci:latest AS bindep
 
-FROM ${BUILDER_IMAGE}:a94f2ff68ac92d911ef97e9037cd437432277719 AS builder
+FROM ${BUILDER_IMAGE}:b30eefa3016d4d18ad81a25526617859576fe172 AS builder
 COPY --from=bindep --link /runtime-pip-packages /runtime-pip-packages
 
-FROM ${RUNTIME_IMAGE}:a391e31bb33041611e2aa2797debcb21e6f221cd AS runtime
+FROM ${RUNTIME_IMAGE}:956fd5fb000e820092c47931321129012271824c AS runtime
 COPY --from=bindep --link /runtime-dist-packages /runtime-dist-packages
 COPY --from=builder --link /var/lib/openstack /var/lib/openstack
 RUN <<EOF /bin/bash
