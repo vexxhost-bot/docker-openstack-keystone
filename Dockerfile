@@ -1,14 +1,14 @@
 # syntax=docker/dockerfile-upstream:master-labs
 
-ARG BUILDER_IMAGE=quay.io/vexxhost/openstack-builder-focal
-ARG RUNTIME_IMAGE=quay.io/vexxhost/openstack-runtime-focal
+ARG BUILDER_IMAGE
+ARG RUNTIME_IMAGE
 
 FROM quay.io/vexxhost/bindep-loci:latest AS bindep
 
-FROM ${BUILDER_IMAGE}:b30eefa3016d4d18ad81a25526617859576fe172 AS builder
+FROM ${BUILDER_IMAGE} AS builder
 COPY --from=bindep --link /runtime-pip-packages /runtime-pip-packages
 
-FROM ${RUNTIME_IMAGE}:956fd5fb000e820092c47931321129012271824c AS runtime
+FROM ${RUNTIME_IMAGE} AS runtime
 COPY --from=bindep --link /runtime-dist-packages /runtime-dist-packages
 COPY --from=builder --link /var/lib/openstack /var/lib/openstack
 RUN <<EOF /bin/bash
